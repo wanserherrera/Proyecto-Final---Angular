@@ -1,0 +1,15 @@
+<!-- src/app/pages/login/login.html -->
+
+<mat-card class="login-card">
+  <h2>Selecciona tu rol</h2>
+
+  <div class="button-container">
+    <button mat-raised-button color="primary" (click)="loginAs('admin')">
+      Entrar como Admin
+    </button>
+
+    <button mat-raised-button color="accent" (click)="loginAs('usuario')">
+      Entrar como Usuario
+    </button>
+  </div>
+</mat-card>

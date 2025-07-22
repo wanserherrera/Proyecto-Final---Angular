@@ -1,0 +1,6 @@
+<mat-nav-list>
+  <a mat-list-item routerLink="/">Inicio</a>
+  <a mat-list-item routerLink="/alumnos" *ngIf="esAdmin">Alumnos</a>
+  <a mat-list-item routerLink="/listado" *ngIf="esUsuario">Listado Alumnos</a>
+  <button mat-button (click)="cerrarSesion()">Cerrar sesión</button>
+</mat-nav-list>

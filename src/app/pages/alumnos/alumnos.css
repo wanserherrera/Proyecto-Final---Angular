@@ -1,0 +1,6 @@
+.campo {
+  display: block;
+  margin: 12px 0;
+  width: 100%;
+  max-width: 400px;
+}

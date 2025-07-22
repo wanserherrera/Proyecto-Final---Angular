@@ -1,0 +1,55 @@
+<h2>Gestión de Alumnos</h2>
+
+<form [formGroup]="formulario" (ngSubmit)="agregar()" style="margin-bottom: 20px;">
+  <mat-form-field appearance="fill" style="margin-right: 10px;">
+    <mat-label>Nombre</mat-label>
+    <input matInput formControlName="nombre" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" style="margin-right: 10px;">
+    <mat-label>Apellido</mat-label>
+    <input matInput formControlName="apellido" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" style="margin-right: 10px;">
+    <mat-label>Curso</mat-label>
+    <input matInput formControlName="curso" />
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit">
+    {{ modoEdicion ? 'Actualizar' : 'Agregar' }}
+  </button>
+
+  <button mat-button type="button" (click)="cancelar()" *ngIf="modoEdicion">
+    Cancelar
+  </button>
+</form>
+
+<table mat-table [dataSource]="alumnos" class="mat-elevation-z8" style="width: 100%;">
+
+  <ng-container matColumnDef="nombre">
+    <th mat-header-cell *matHeaderCellDef>Nombre</th>
+    <td mat-cell *matCellDef="let alumno">{{ alumno.nombre }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="apellido">
+    <th mat-header-cell *matHeaderCellDef>Apellido</th>
+    <td mat-cell *matCellDef="let alumno">{{ alumno.apellido }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="curso">
+    <th mat-header-cell *matHeaderCellDef>Curso</th>
+    <td mat-cell *matCellDef="let alumno">{{ alumno.curso }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="acciones">
+    <th mat-header-cell *matHeaderCellDef>Acciones</th>
+    <td mat-cell *matCellDef="let alumno; let i = index">
+      <button mat-button color="accent" (click)="editar(i)">Editar</button>
+      <button mat-button color="warn" (click)="eliminar(i)">Eliminar</button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="['nombre', 'apellido', 'curso', 'acciones']"></tr>
+  <tr mat-row *matRowDef="let row; columns: ['nombre', 'apellido', 'curso', 'acciones']"></tr>
+</table>
