@@ -1,59 +1,42 @@
-# GestorAsistentes
+# Angular - Entrega N°1 - Edilson Herrera
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.1.1.
+## 🎯 Descripción
 
-## Development server
+Proyecto Angular standalone para la gestión de alumnos, cursos e inscripciones. Desarrollado como parte de la Entrega N°1 del curso de Desarrollo Web. La aplicación permite el acceso con diferentes roles (Administrador o Usuario) y muestra distintas funcionalidades según el rol.
 
-To start a local development server, run:
+## 🚀 Tecnologías usadas
+
+- Angular(standalone)
+- Angular Material
+- TypeScript
+- Formularios reactivos
+- Rutas protegidas por rol
+
+## 👥 Funcionalidades por rol
+
+### Rol **Administrador**
+- Accede a la vista de alumnos
+- Puede agregar, editar y eliminar alumnos
+
+### Rol **Usuario**
+- Puede ver listados de alumnos y cursos
+- Puede gestionar inscripciones (asignar y quitar alumnos a cursos)
+
+# 🧪 Cómo ejecutar el proyecto
+
+1. Clona el repositorio:
 
 ```bash
+git clone https://github.com/wanserherrera/Angular-Entrega-N-1-Herrera.git
+cd Angular-Entrega-N-1-Herrera
+
+Instala dependencias:
+
+2.Instala dependencias:
+npm install
+
+3.Ejecuta en modo desarrollo:
 ng serve
-```
+Luego abre: http://localhost:4200
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
