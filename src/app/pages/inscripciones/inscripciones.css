@@ -1,11 +1,17 @@
-mat-form-field {
-  width: 100%;
-  max-width: 300px;
-  margin-right: 16px;
-}
-
-form {
+.formulario {
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
+  margin-bottom: 20px;
+}
+
+.acciones {
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .formulario {
+    flex-direction: column;
+  }
 }

@@ -1,6 +1,6 @@
 <h2>Gestión de Inscripciones</h2>
 
-<form>
+<form class="formulario">
   <mat-form-field appearance="outline">
     <mat-label>Alumno</mat-label>
     <mat-select [(ngModel)]="alumnoSeleccionado" name="alumno">
@@ -19,19 +19,21 @@
     </mat-select>
   </mat-form-field>
 
-  <div style="margin-top: 16px;">
+  <div class="acciones">
     <button mat-raised-button color="primary" type="button" (click)="agregarInscripcion()">
       Agregar
     </button>
   </div>
 </form>
 
-<hr>
+<hr />
 
 <h3>Inscripciones Realizadas</h3>
 <mat-list>
   <mat-list-item *ngFor="let ins of inscripciones">
     {{ ins.alumno.nombre }} inscrito en {{ ins.curso.nombre }}
-    <button mat-button color="warn" (click)="eliminarInscripcion(ins)">Eliminar</button>
+    <button mat-button color="warn" (click)="eliminarInscripcion(ins)">
+      Eliminar
+    </button>
   </mat-list-item>
 </mat-list>

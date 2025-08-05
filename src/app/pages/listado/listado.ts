@@ -1,4 +1,8 @@
 // src/app/pages/listado/listado.ts
+// Proyecto realizado por Edilson Herrera.
+// Componente: listado.ts
+// Funcionalidad: Muestra en formato de tabla un listado de alumnos con información básica utilizando datos obtenidos del servicio AlumnoService.
+
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';

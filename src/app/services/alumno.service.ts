@@ -1,4 +1,8 @@
 // src/app/services/alumno.service.ts
+// Proyecto realizado por Edilson Herrera.
+// Servicio: alumno.service.ts
+// Funcionalidad: Proporciona un listado simulado de alumnos para consumirlo en los componentes mediante observables.
+
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Alumno } from '../models/alumno.model';

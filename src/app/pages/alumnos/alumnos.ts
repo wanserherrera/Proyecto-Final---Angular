@@ -1,3 +1,8 @@
+// Proyecto realizado por Edilson Herrera.
+// Componente: alumnos.ts
+// Funcionalidad: Permite agregar, editar y eliminar alumnos utilizando formularios reactivos y una tabla de Angular Material.
+
+// src/app/pages/alumnos/alumnos.ts
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -5,6 +10,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-alumnos',
@@ -15,7 +21,8 @@ import { MatButtonModule } from '@angular/material/button';
     MatTableModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule
   ],
   templateUrl: './alumnos.html',
 })
@@ -28,9 +35,27 @@ export class Alumnos {
 
   constructor(private fb: FormBuilder) {
     this.formulario = this.fb.group({
-      nombre: ['', Validators.required],
-      apellido: ['', Validators.required],
-      curso: ['', Validators.required]
+      nombre: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(/^[A-Za-zÁÉÍÓÚÑáéíóúñ\s]{2,}$/)
+        ]
+      ],
+      apellido: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(/^[A-Za-zÁÉÍÓÚÑáéíóúñ\s]{2,}$/)
+        ]
+      ],
+      curso: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(/^[A-Za-z0-9\s]{2,}$/)
+        ]
+      ]
     });
   }
 
@@ -41,7 +66,7 @@ export class Alumnos {
 
     if (this.modoEdicion && this.indiceEditando !== null) {
       this.alumnos[this.indiceEditando] = alumno;
-      this.alumnos = [...this.alumnos]; // Forzar actualización
+      this.alumnos = [...this.alumnos];
       this.modoEdicion = false;
       this.indiceEditando = null;
     } else {
@@ -60,7 +85,7 @@ export class Alumnos {
 
   eliminar(index: number): void {
     this.alumnos.splice(index, 1);
-    this.alumnos = [...this.alumnos]; // Actualizar vista
+    this.alumnos = [...this.alumnos];
     this.cancelar();
   }
 

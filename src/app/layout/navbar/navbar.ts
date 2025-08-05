@@ -1,42 +1,44 @@
 // Proyecto realizado por Edilson Herrera.
-// src/app/layout/navbar/navbar.ts
+// Componente: navbar.ts
+// Funcionalidad: Barra lateral de navegación que muestra opciones distintas según el rol (admin o usuario). Incluye botón para cerrar sesión.
+
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, RouterModule, MatToolbarModule, MatButtonModule],
+  imports: [CommonModule, RouterModule, MatListModule, MatButtonModule],
   template: `
-    <mat-toolbar color="primary">
-      <span>Gestor de Asistentes</span>
-      <span class="spacer"></span>
-
+    <mat-nav-list>
       <!-- ADMIN -->
       <ng-container *ngIf="auth.rolActual === 'admin'">
-        <a mat-button routerLink="/">Inicio</a>
-        <a mat-button routerLink="/alumnos">Alumnos</a>
+        <a mat-list-item routerLink="/">Inicio</a>
+        <a mat-list-item routerLink="/alumnos">Alumnos</a>
       </ng-container>
 
       <!-- USUARIO -->
       <ng-container *ngIf="auth.rolActual === 'usuario'">
-        <a mat-button routerLink="/">Inicio</a>
-        <a mat-button routerLink="/listado">Listado</a>
-        <a mat-button routerLink="/inscripciones">Inscripciones</a>
+        <a mat-list-item routerLink="/">Inicio</a>
+        <a mat-list-item routerLink="/listado">Listado</a>
+        <a mat-list-item routerLink="/inscripciones">Inscripciones</a>
       </ng-container>
 
-      <!-- Cerrar sesión -->
       <button mat-button *ngIf="auth.rolActual" (click)="cerrarSesion()">Cerrar sesión</button>
-    </mat-toolbar>
+    </mat-nav-list>
   `,
-  styles: [`.spacer { flex: 1 1 auto; }`]
+  styles: [`
+    mat-nav-list {
+      width: 200px;
+    }
+  `]
 })
 export class Navbar {
-  auth: AuthService = inject(AuthService); // tipado explícito para evitar errores
+  auth: AuthService = inject(AuthService);
 
   cerrarSesion() {
     this.auth.logout();

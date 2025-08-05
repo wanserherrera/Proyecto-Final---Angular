@@ -1,4 +1,8 @@
 // src/app/services/auth.service.ts
+// Proyecto realizado por Edilson Herrera.
+// Servicio: auth.service.ts
+// Funcionalidad: Administra la autenticación basada en roles ("admin" o "usuario") y gestiona el inicio/cierre de sesión.
+
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 

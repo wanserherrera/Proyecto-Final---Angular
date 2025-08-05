@@ -1,6 +1,26 @@
-.campo {
-  display: block;
-  margin: 12px 0;
+.formulario {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  max-width: 800px;
+  margin-bottom: 20px;
+}
+
+.acciones {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tabla {
   width: 100%;
-  max-width: 400px;
+  overflow-x: auto;
+  border-radius: 8px;
+  background: white;
+}
+
+@media (max-width: 768px) {
+  .formulario {
+    flex-direction: column;
+  }
 }

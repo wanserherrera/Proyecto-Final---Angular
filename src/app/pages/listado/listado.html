@@ -3,7 +3,8 @@
 <h2>Listado de Alumnos</h2>
 
 <ng-container *ngIf="alumnos$ | async as alumnos">
-  <table mat-table [dataSource]="alumnos" class="mat-elevation-z8">
+  <table mat-table [dataSource]="alumnos" class="mat-elevation-z8 tabla">
+
 
     <!-- Columna: ID -->
     <ng-container matColumnDef="id">

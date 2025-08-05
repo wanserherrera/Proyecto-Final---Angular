@@ -1,8 +1,11 @@
-# Angular - Entrega N°1 - Edilson Herrera
+# Angular - Entrega N°2 - Edilson Herrera
 
 ## 🎯 Descripción
 
-Proyecto Angular standalone para la gestión de alumnos, cursos e inscripciones. Desarrollado como parte de la Entrega N°1 del curso de Desarrollo Web. La aplicación permite el acceso con diferentes roles (Administrador o Usuario) y muestra distintas funcionalidades según el rol.
+Gestor de Asistentes - Proyecto Angular
+
+Este es un proyecto realizado por **Edilson Herrera Villa** como parte de la **Entrega N.º 2** del curso de Angular.  
+Se trata de una aplicación para gestionar alumnos e inscripciones, con control de acceso por roles (`admin` y `usuario`), utilizando **Angular 17** y **Angular Material**.
 
 ## 🚀 Tecnologías usadas
 
@@ -25,10 +28,7 @@ Proyecto Angular standalone para la gestión de alumnos, cursos e inscripciones.
 # 🧪 Cómo ejecutar el proyecto
 
 1. Clona el repositorio:
-
-```bash
-git clone https://github.com/wanserherrera/Angular-Entrega-N-1-Herrera.git
-cd Angular-Entrega-N-1-Herrera
+https://github.com/wanserherrera/Angular-Entrega-N-2.git
 
 Instala dependencias:
 

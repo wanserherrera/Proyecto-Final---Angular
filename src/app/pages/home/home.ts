@@ -1,3 +1,7 @@
+// Proyecto realizado por Edilson Herrera.
+// Componente: home.ts
+// Funcionalidad: Componente de bienvenida al sistema. Punto de entrada general tras login.
+
 import { Component } from '@angular/core';
 
 @Component({

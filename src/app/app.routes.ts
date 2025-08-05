@@ -1,4 +1,8 @@
 // src/app/app.routes.ts
+// Proyecto realizado por Edilson Herrera.
+// Archivo: app.routes.ts
+// Funcionalidad: Define todas las rutas del sistema, con protección de rutas basada en roles para 'alumnos', 'listado' e 'inscripciones'.
+
 import { Routes } from '@angular/router';
 import { Layout } from './layout/layout';
 import { DummyHome } from './pages/home/home';

@@ -1,4 +1,8 @@
 // src/app/guards/role.guard.ts
+// Proyecto realizado por Edilson Herrera.
+// Guard: role.guard.ts
+// Funcionalidad: Protege rutas según el rol del usuario autenticado. Redirige al login si no hay sesión o acceso denegado si el rol no coincide.
+
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
