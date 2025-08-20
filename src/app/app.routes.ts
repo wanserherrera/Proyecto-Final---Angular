@@ -1,48 +1,51 @@
 // src/app/app.routes.ts
-// Proyecto realizado por Edilson Herrera.
-// Archivo: app.routes.ts
-// Funcionalidad: Define todas las rutas del sistema, con protección de rutas basada en roles para 'alumnos', 'listado' e 'inscripciones'.
-
 import { Routes } from '@angular/router';
-import { Layout } from './layout/layout';
-import { DummyHome } from './pages/home/home';
-import { Alumnos } from './pages/alumnos/alumnos';
 import { Login } from './pages/login/login';
-import { roleGuard } from './guards/role.guard';
-import { Listado } from './pages/listado/listado';
-import { Inscripciones } from './pages/inscripciones/inscripciones';
+import { authGuard } from './services/auth.guard';
+import { roleGuard } from './services/role.guard';
+
 
 export const routes: Routes = [
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: Login },
 
+  // Rutas solo para ADMIN
   {
-    path: '',
-    component: Layout,
-    children: [
-      { path: '', component: DummyHome },
+    path: 'alumnos',
+    loadChildren: () =>
+      import('./pages/alumnos/alumnos.routes').then(m => m.default),
+    canActivate: [authGuard, roleGuard],
+    data: { role: 'admin' }
+  },
+  {
+    path: 'usuarios',
+    loadChildren: () =>
+      import('./pages/usuarios/usuarios.routes').then(m => m.default),
+    canActivate: [authGuard, roleGuard],
+    data: { role: 'admin' }
+  },
+  {
+    path: 'cursos',
+    loadChildren: () =>
+      import('./pages/cursos/cursos.routes').then(m => m.default),
+    canActivate: [authGuard, roleGuard],
+    data: { role: 'admin' }
+  },
 
-      // ADMIN
-      {
-        path: 'alumnos',
-        component: Alumnos,
-        canActivate: [roleGuard],
-        data: { role: 'admin' }
-      },
-
-      // USUARIO
-      {
-        path: 'listado',
-        component: Listado,
-        canActivate: [roleGuard],
-        data: { role: 'usuario' }
-      },
-      {
-        path: 'inscripciones',
-        component: Inscripciones,
-        canActivate: [roleGuard],
-        data: { role: 'usuario' }
-      }
-    ]
+  // Rutas solo para USUARIO
+  {
+    path: 'listado',
+    loadChildren: () =>
+      import('./pages/listado/listado.routes').then(m => m.default),
+    canActivate: [authGuard, roleGuard],
+    data: { role: 'usuario' }
+  },
+  {
+    path: 'inscripciones',
+    loadChildren: () =>
+      import('./pages/inscripciones/inscripciones.routes').then(m => m.default),
+    canActivate: [authGuard, roleGuard],
+    data: { role: 'usuario' }
   },
 
   { path: '**', redirectTo: 'login' }

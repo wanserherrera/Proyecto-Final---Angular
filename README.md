@@ -1,10 +1,10 @@
-# Angular - Entrega N°2 - Edilson Herrera
+# Angular - Entrega N°3 - Edilson Herrera
 
 ## 🎯 Descripción
 
 Gestor de Asistentes - Proyecto Angular
 
-Este es un proyecto realizado por **Edilson Herrera Villa** como parte de la **Entrega N.º 2** del curso de Angular.  
+Este es un proyecto realizado por **Edilson Herrera Villa** como parte de la **Entrega N.º 3** del curso de Angular.  
 Se trata de una aplicación para gestionar alumnos e inscripciones, con control de acceso por roles (`admin` y `usuario`), utilizando **Angular 17** y **Angular Material**.
 
 ## 🚀 Tecnologías usadas

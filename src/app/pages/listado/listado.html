@@ -1,6 +1,8 @@
 <!-- src/app/pages/listado/listado.html -->
 
 <h2>Listado de Alumnos</h2>
+<!-- Botón para ir a inscripciones -->
+<button routerLink="/inscripciones">Ir a Inscripciones</button>
 
 <ng-container *ngIf="alumnos$ | async as alumnos">
   <table mat-table [dataSource]="alumnos" class="mat-elevation-z8 tabla">
@@ -34,3 +36,4 @@
     No hay alumnos para mostrar.
   </div>
 </ng-container>
+

@@ -1,7 +1,8 @@
 // src/app/pages/inscripciones/inscripciones.ts
 // Proyecto realizado por Edilson Herrera.
 // Componente: inscripciones.ts
-// Funcionalidad: Gestiona la inscripción de alumnos a cursos mediante un formulario con selectores desplegables. Permite agregar y eliminar inscripciones.
+// Funcionalidad: Gestiona la inscripción de alumnos a cursos mediante un formulario con selectores desplegables.
+// Permite agregar y eliminar inscripciones.
 
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -13,6 +14,7 @@ import { MatListModule } from '@angular/material/list';
 
 import { ALUMNOS_MOCK, CURSOS_MOCK } from '../../mocks/inscripciones.mock';
 
+// Interfaces de dominio
 interface Alumno {
   id: number;
   nombre: string;
@@ -51,6 +53,7 @@ export class Inscripciones {
 
   inscripciones: Inscripcion[] = [];
 
+  // Agregar inscripción
   agregarInscripcion() {
     if (!this.alumnoSeleccionado || !this.cursoSeleccionado) {
       alert('Seleccione alumno y curso');
@@ -78,6 +81,7 @@ export class Inscripciones {
     this.cursoSeleccionado = null;
   }
 
+  // Eliminar inscripción
   eliminarInscripcion(inscripcion: Inscripcion) {
     this.inscripciones = this.inscripciones.filter(i => i !== inscripcion);
   }

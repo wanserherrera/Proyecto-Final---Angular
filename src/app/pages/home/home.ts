@@ -9,4 +9,4 @@ import { Component } from '@angular/core';
   standalone: true,
   template: `<p>Bienvenido al Gestor de Asistentes</p>`
 })
-export class DummyHome {}
+export class HomeComponent {}

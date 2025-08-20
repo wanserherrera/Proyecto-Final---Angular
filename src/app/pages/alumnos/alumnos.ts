@@ -1,97 +1,149 @@
-// Proyecto realizado por Edilson Herrera.
-// Componente: alumnos.ts
-// Funcionalidad: Permite agregar, editar y eliminar alumnos utilizando formularios reactivos y una tabla de Angular Material.
-
-// src/app/pages/alumnos/alumnos.ts
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { Alumno } from '../../models/alumno.model';
+import { AlumnoService } from '../../services/alumno.service';
 
 @Component({
   selector: 'app-alumnos',
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    MatTableModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatIconModule
-  ],
-  templateUrl: './alumnos.html',
+  imports: [CommonModule, ReactiveFormsModule, MatTableModule, MatButtonModule, MatInputModule],
+  template: `
+    <h2>Gestión de Alumnos</h2>
+
+    <form [formGroup]="alumnoForm" (ngSubmit)="onSubmit()" class="form-container">
+
+      <div>
+        <input matInput placeholder="Nombre" formControlName="nombre" />
+        <div class="error" *ngIf="alumnoForm.get('nombre')?.touched && alumnoForm.get('nombre')?.invalid">
+          <small *ngIf="alumnoForm.get('nombre')?.errors?.['required']">El nombre es obligatorio.</small>
+          <small *ngIf="alumnoForm.get('nombre')?.errors?.['minlength']">El nombre debe tener al menos 3 letras.</small>
+        </div>
+      </div>
+
+      <div>
+        <input matInput placeholder="Apellido" formControlName="apellido" />
+        <div class="error" *ngIf="alumnoForm.get('apellido')?.touched && alumnoForm.get('apellido')?.invalid">
+          <small *ngIf="alumnoForm.get('apellido')?.errors?.['required']">El apellido es obligatorio.</small>
+          <small *ngIf="alumnoForm.get('apellido')?.errors?.['minlength']">El apellido debe tener al menos 3 letras.</small>
+        </div>
+      </div>
+
+      <div>
+        <input matInput placeholder="Email" formControlName="email" />
+        <div class="error" *ngIf="alumnoForm.get('email')?.touched && alumnoForm.get('email')?.invalid">
+          <small *ngIf="alumnoForm.get('email')?.errors?.['required']">El email es obligatorio.</small>
+          <small *ngIf="alumnoForm.get('email')?.errors?.['email']">El email no es válido.</small>
+        </div>
+      </div>
+
+      <button mat-raised-button color="primary" type="submit" [disabled]="alumnoForm.invalid">
+        {{ editando ? 'Guardar Cambios' : 'Agregar Alumno' }}
+      </button>
+    </form>
+
+    <br />
+
+    <table mat-table [dataSource]="alumnos" class="mat-elevation-z8">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> ID </th>
+        <td mat-cell *matCellDef="let alumno"> {{ alumno.id }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef> Nombre </th>
+        <td mat-cell *matCellDef="let alumno"> {{ alumno.nombre }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="apellido">
+        <th mat-header-cell *matHeaderCellDef> Apellido </th>
+        <td mat-cell *matCellDef="let alumno"> {{ alumno.apellido }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef> Email </th>
+        <td mat-cell *matCellDef="let alumno"> {{ alumno.email }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef> Acciones </th>
+        <td mat-cell *matCellDef="let alumno">
+          <button mat-button color="accent" (click)="editar(alumno)">Editar</button>
+          <button mat-button color="warn" (click)="eliminar(alumno.id)">Eliminar</button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  `,
+  styles: [`
+    .form-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-width: 400px;
+    }
+    .error {
+      color: red;
+      font-size: 12px;
+    }
+  `]
 })
-export class Alumnos {
-  alumnos: { nombre: string; apellido: string; curso: string }[] = [];
+export class Alumnos implements OnInit {
+  alumnos: Alumno[] = [];
+  displayedColumns: string[] = ['id', 'nombre', 'apellido', 'email', 'acciones'];
+  alumnoForm!: FormGroup;
+  editando = false;
+  alumnoEditandoId: number | null = null;
 
-  formulario: FormGroup;
-  modoEdicion = false;
-  indiceEditando: number | null = null;
+  constructor(private fb: FormBuilder, private alumnoService: AlumnoService) {}
 
-  constructor(private fb: FormBuilder) {
-    this.formulario = this.fb.group({
-      nombre: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(/^[A-Za-zÁÉÍÓÚÑáéíóúñ\s]{2,}$/)
-        ]
-      ],
-      apellido: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(/^[A-Za-zÁÉÍÓÚÑáéíóúñ\s]{2,}$/)
-        ]
-      ],
-      curso: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(/^[A-Za-z0-9\s]{2,}$/)
-        ]
-      ]
+  ngOnInit(): void {
+    this.alumnoForm = this.fb.group({
+      nombre: ['', [Validators.required, Validators.minLength(3)]],
+      apellido: ['', [Validators.required, Validators.minLength(3)]],
+      email: ['', [Validators.required, Validators.email]],
+    });
+
+    this.alumnoService.getAlumnos().subscribe(data => {
+      this.alumnos = data;
     });
   }
 
-  agregar(): void {
-    if (this.formulario.invalid) return;
+  onSubmit(): void {
+    if (this.alumnoForm.invalid) return;
 
-    const alumno = this.formulario.value;
+    const nuevoAlumno: Alumno = {
+      id: this.alumnoEditandoId ?? 0,
+      ...this.alumnoForm.value,
+    };
 
-    if (this.modoEdicion && this.indiceEditando !== null) {
-      this.alumnos[this.indiceEditando] = alumno;
-      this.alumnos = [...this.alumnos];
-      this.modoEdicion = false;
-      this.indiceEditando = null;
+    if (this.editando) {
+      this.alumnoService.editarAlumno(nuevoAlumno);
+      this.editando = false;
+      this.alumnoEditandoId = null;
     } else {
-      this.alumnos = [...this.alumnos, alumno];
+      this.alumnoService.agregarAlumno(nuevoAlumno);
     }
 
-    this.formulario.reset();
+    this.alumnoForm.reset();
   }
 
-  editar(index: number): void {
-    const alumno = this.alumnos[index];
-    this.formulario.patchValue(alumno);
-    this.modoEdicion = true;
-    this.indiceEditando = index;
+  editar(alumno: Alumno): void {
+    this.editando = true;
+    this.alumnoEditandoId = alumno.id;
+    this.alumnoForm.setValue({
+      nombre: alumno.nombre,
+      apellido: alumno.apellido,
+      email: alumno.email,
+    });
   }
 
-  eliminar(index: number): void {
-    this.alumnos.splice(index, 1);
-    this.alumnos = [...this.alumnos];
-    this.cancelar();
-  }
-
-  cancelar(): void {
-    this.formulario.reset();
-    this.modoEdicion = false;
-    this.indiceEditando = null;
+  eliminar(id: number): void {
+    this.alumnoService.eliminarAlumno(id);
   }
 }

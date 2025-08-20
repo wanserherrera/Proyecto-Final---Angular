@@ -1,32 +1,24 @@
 // src/app/services/auth.service.ts
 // Proyecto realizado por Edilson Herrera.
-// Servicio: auth.service.ts
-// Funcionalidad: Administra la autenticación basada en roles ("admin" o "usuario") y gestiona el inicio/cierre de sesión.
+// Servicio: AuthService
+// Funcionalidad: Maneja login, logout y roles de usuario (admin | usuario).
 
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root'
+})
 export class AuthService {
-  public rolActual: 'admin' | 'usuario' | null = null;
+  // Guardamos el rol actual en memoria
+  rolActual: 'admin' | 'usuario' | null = null;
 
-  constructor(private router: Router) {
-    // intenta recuperar el rol desde localStorage
-    const rolGuardado = localStorage.getItem('rol');
-    if (rolGuardado === 'admin' || rolGuardado === 'usuario') {
-      this.rolActual = rolGuardado;
-    }
-  }
+  constructor(private router: Router) {}
 
   login(rol: 'admin' | 'usuario') {
     this.rolActual = rol;
-    localStorage.setItem('rol', rol); // Guardar en localStorage
-
-    if (rol === 'admin') {
-      this.router.navigate(['/']);
-    } else {
-      this.router.navigate(['/listado']);
-    }
+    // Podríamos guardar en localStorage si quieres persistencia
+    localStorage.setItem('rol', rol);
   }
 
   logout() {
@@ -35,7 +27,13 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
+  // Método que piden tus guards
   getCurrentRole(): 'admin' | 'usuario' | null {
-    return this.rolActual;
+    return this.rolActual || (localStorage.getItem('rol') as 'admin' | 'usuario' | null);
+  }
+
+  // Helper para saber si está logueado
+  isLoggedIn(): boolean {
+    return this.getCurrentRole() !== null;
   }
 }
