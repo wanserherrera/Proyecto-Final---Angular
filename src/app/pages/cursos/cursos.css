@@ -1,1 +1,9 @@
-h2 { margin-bottom: 12px; }
+.tabla {
+  width: 100%;
+}
+
+.sin-datos {
+  margin-top: 1rem;
+  font-style: italic;
+  color: gray;
+}

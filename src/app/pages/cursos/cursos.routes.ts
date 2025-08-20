@@ -1,5 +1,6 @@
+// src/app/pages/cursos/cursos.routes.ts
 import { Routes } from '@angular/router';
-import { Cursos } from './cursos'; 
+import { Cursos } from './cursos';
 
 const routes: Routes = [
   { path: '', component: Cursos }

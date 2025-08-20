@@ -16,15 +16,16 @@ import { MatButtonModule } from '@angular/material/button';
   template: `
     <mat-nav-list>
       <!-- ADMIN -->
-      <ng-container *ngIf="auth.rolActual === 'admin'">
+      <ng-container *ngIf="esAdmin">
         <a mat-list-item routerLink="/">Inicio</a>
         <a mat-list-item routerLink="/alumnos">Alumnos</a>
+        <a mat-list-item routerLink="/cursos">Cursos</a> <!-- Solo admins -->
       </ng-container>
 
       <!-- USUARIO -->
-      <ng-container *ngIf="auth.rolActual === 'usuario'">
+      <ng-container *ngIf="esUsuario">
         <a mat-list-item routerLink="/">Inicio</a>
-        <a mat-list-item routerLink="/listado">Listado</a>
+        <a mat-list-item routerLink="/listado">Listado Alumnos</a>
         <a mat-list-item routerLink="/inscripciones">Inscripciones</a>
       </ng-container>
 
@@ -39,6 +40,10 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class Navbar {
   auth: AuthService = inject(AuthService);
+
+  // Variables para roles
+  esAdmin = this.auth.rolActual === 'admin';
+  esUsuario = this.auth.rolActual === 'usuario';
 
   cerrarSesion() {
     this.auth.logout();

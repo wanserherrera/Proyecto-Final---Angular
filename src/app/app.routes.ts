@@ -13,7 +13,7 @@ export const routes: Routes = [
   {
     path: '',
     component: Layout,
-    canActivate: [authGuard], // el guard principal
+    canActivate: [authGuard], // guard principal para proteger Layout
     children: [
       // Rutas solo para ADMIN
       {
