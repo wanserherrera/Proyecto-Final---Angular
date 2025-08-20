@@ -1,12 +1,9 @@
 <!-- src/app/pages/listado/listado.html -->
 
 <h2>Listado de Alumnos</h2>
-<!-- Botón para ir a inscripciones -->
-<button routerLink="/inscripciones">Ir a Inscripciones</button>
 
 <ng-container *ngIf="alumnos$ | async as alumnos">
   <table mat-table [dataSource]="alumnos" class="mat-elevation-z8 tabla">
-
 
     <!-- Columna: ID -->
     <ng-container matColumnDef="id">
@@ -26,14 +23,22 @@
       <td mat-cell *matCellDef="let alumno"> {{ alumno.email }} </td>
     </ng-container>
 
-    <!-- Filas de encabezado y contenido -->
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 
-  <!-- Mensaje si no hay alumnos -->
   <div *ngIf="alumnos.length === 0" class="sin-datos">
     No hay alumnos para mostrar.
   </div>
 </ng-container>
 
+<!-- Apartado para ir a inscripciones -->
+<div class="apartado-inscripciones">
+  <h3>Gestión de Inscripciones</h3>
+  <p>Puedes ver o registrar inscripciones de los alumnos aquí:</p>
+  <a routerLink="/inscripciones">
+    <button mat-raised-button color="primary">
+      Ir a Inscripciones
+    </button>
+  </a>
+</div>
