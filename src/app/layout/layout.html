@@ -1,11 +1,14 @@
+<!-- src/app/pages/layout/layout.html -->
+
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav mode="side" opened>
+  <mat-sidenav #sidenav mode="side" [opened]="true">
     <app-navbar></app-navbar>
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <app-toolbar></app-toolbar>
-    <div class="content">
+    <app-toolbar (toggleMenu)="sidenav.toggle()"></app-toolbar>
+    <div class="contenido">
+      <!-- Aquí se mostrarán las páginas: listado, inscripciones, etc. -->
       <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>
