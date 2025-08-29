@@ -1,9 +1,85 @@
-.tabla {
-  width: 100%;
+/* cursos.css */
+
+/* Contenedor general */
+:host {
+  display: block;
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 10px;
+  font-family: Roboto, Arial, sans-serif;
 }
 
+/* Título */
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #3f51b5; /* color principal Material */
+}
+
+/* Formulario de agregar/editar */
+.form-curso {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+.form-curso input {
+  flex: 1 1 200px;
+  min-width: 200px;
+}
+
+.form-curso button {
+  height: 36px;
+}
+
+/* Tabla */
+.tabla {
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Cabeceras de tabla */
+.mat-header-cell {
+  background-color: #3f51b5;
+  color: white;
+  font-weight: bold;
+  text-align: left;
+}
+
+/* Filas de tabla */
+.mat-row {
+  transition: background-color 0.2s;
+}
+
+.mat-row:hover {
+  background-color: #e8eaf6;
+}
+
+/* Botones de acciones */
+button.mat-button {
+  margin-right: 5px;
+}
+
+/* Mensaje de "sin datos" */
 .sin-datos {
-  margin-top: 1rem;
+  text-align: center;
+  margin-top: 15px;
   font-style: italic;
-  color: gray;
+  color: #757575;
+}
+
+/* Responsive: en pantallas pequeñas */
+@media (max-width: 600px) {
+  .form-curso {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .form-curso input,
+  .form-curso button {
+    width: 100%;
+  }
 }

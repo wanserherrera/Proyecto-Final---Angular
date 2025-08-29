@@ -1,15 +1,14 @@
-// src/app/pages/cursos/cursos.ts
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { Observable } from 'rxjs';
 import { Curso } from '../../models/curso.model';
 import { AuthService } from '../../services/auth.service';
-import { RouterModule } from '@angular/router';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { CursoService } from '../../services/curso.service';
 
 @Component({
   selector: 'app-cursos',
@@ -18,64 +17,69 @@ import { map } from 'rxjs/operators';
   templateUrl: './cursos.html',
   styleUrls: ['./cursos.css']
 })
-export class Cursos {
+export class Cursos implements OnInit {
   auth = inject(AuthService);
+  private cursoService = inject(CursoService);
 
-  // Lista interna simulando backend
-  private cursosSubject = new BehaviorSubject<Curso[]>([
-    { id: 1, nombre: 'Matemáticas' },
-    { id: 2, nombre: 'Física' },
-    { id: 3, nombre: 'Química' }
-  ]);
-
-  cursos$: Observable<Curso[]> = this.cursosSubject.asObservable().pipe(map(c => c ?? []));
-
-  displayedColumns: string[] = ['id', 'nombre', 'acciones'];
+  cursos$!: Observable<Curso[]>;
+  displayedColumns: string[] = ['id', 'nombre', 'descripcion', 'acciones'];
 
   // Campos para agregar/editar
   nuevoNombre = '';
-  editId: number | null = null;
+  nuevaDescripcion = '';
+  editId: string | null = null;
+
+  ngOnInit(): void {
+    this.refrescarCursos();
+  }
+
+  // Refrescar lista
+  refrescarCursos() {
+    this.cursos$ = this.cursoService.getCursos();
+  }
 
   // Crear un curso
   agregarCurso() {
     if (!this.nuevoNombre.trim()) return;
-    const cursos = this.cursosSubject.value;
-    const nuevoCurso: Curso = {
-      id: cursos.length ? Math.max(...cursos.map(c => c.id)) + 1 : 1,
-      nombre: this.nuevoNombre
-    };
-    this.cursosSubject.next([...cursos, nuevoCurso]);
-    this.nuevoNombre = '';
+    this.cursoService.createCurso({ nombre: this.nuevoNombre, descripcion: this.nuevaDescripcion })
+      .subscribe(() => {
+        this.nuevoNombre = '';
+        this.nuevaDescripcion = '';
+        this.refrescarCursos();
+      });
   }
 
   // Preparar edición
   editarCurso(curso: Curso) {
     this.editId = curso.id;
     this.nuevoNombre = curso.nombre;
+    this.nuevaDescripcion = curso.descripcion || '';
   }
 
   // Guardar edición
   guardarEdicion() {
     if (this.editId === null || !this.nuevoNombre.trim()) return;
-    const cursos = this.cursosSubject.value.map(c =>
-      c.id === this.editId ? { ...c, nombre: this.nuevoNombre } : c
-    );
-    this.cursosSubject.next(cursos);
-    this.editId = null;
-    this.nuevoNombre = '';
+    this.cursoService.updateCurso(this.editId, {
+      id: this.editId,
+      nombre: this.nuevoNombre,
+      descripcion: this.nuevaDescripcion
+    }).subscribe(() => {
+      this.cancelarEdicion();
+      this.refrescarCursos();
+    });
   }
 
   // Cancelar edición
   cancelarEdicion() {
     this.editId = null;
     this.nuevoNombre = '';
+    this.nuevaDescripcion = '';
   }
 
   // Eliminar curso
-  eliminarCurso(id: number) {
+  eliminarCurso(id: string) {
     if (confirm('¿Seguro que desea eliminar este curso?')) {
-      const cursos = this.cursosSubject.value.filter(c => c.id !== id);
-      this.cursosSubject.next(cursos);
+      this.cursoService.deleteCurso(id).subscribe(() => this.refrescarCursos());
     }
   }
 }
