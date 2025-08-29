@@ -1,7 +1,7 @@
 // src/app/layout/navbar/navbar.ts
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
@@ -37,6 +37,7 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class Navbar {
   auth: AuthService = inject(AuthService);
+  private router: Router = inject(Router);
 
   get esAdmin(): boolean {
     return this.auth.getCurrentRole() === 'admin';
@@ -48,5 +49,6 @@ export class Navbar {
 
   cerrarSesion() {
     this.auth.logout();
+    this.router.navigate(['/login']); // Redirige al login después de cerrar sesión
   }
 }

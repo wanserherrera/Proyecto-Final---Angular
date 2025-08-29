@@ -3,4 +3,5 @@ export interface Alumno {
   nombre: string;
   apellido: string;
   email: string;
+  curso?: string; // opcional, para el formulario
 }
