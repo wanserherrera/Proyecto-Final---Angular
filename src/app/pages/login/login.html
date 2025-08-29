@@ -1,15 +1,14 @@
-<!-- src/app/pages/login/login.html -->
-
 <mat-card class="login-card">
-  <h2>Selecciona tu rol</h2>
+  <h2>Login</h2>
+
+  <input matInput placeholder="Email" [(ngModel)]="email" />
+  <input matInput placeholder="Contraseña" type="password" [(ngModel)]="password" />
 
   <div class="button-container">
-    <button mat-raised-button color="primary" (click)="loginAs('admin')">
-      Entrar como Admin
-    </button>
+    <button mat-raised-button color="primary" (click)="login()">Entrar</button>
+  </div>
 
-    <button mat-raised-button color="accent" (click)="loginAs('usuario')">
-      Entrar como Usuario
-    </button>
+  <div *ngIf="errorMsg" style="color:red; margin-top:10px;">
+    {{ errorMsg }}
   </div>
 </mat-card>

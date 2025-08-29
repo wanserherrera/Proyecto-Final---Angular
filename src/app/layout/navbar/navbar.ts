@@ -1,7 +1,4 @@
-// Proyecto realizado por Edilson Herrera.
-// Componente: navbar.ts
-// Funcionalidad: Barra lateral de navegación que muestra opciones distintas según el rol (admin o usuario). Incluye botón para cerrar sesión.
-
+// src/app/layout/navbar/navbar.ts
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -19,7 +16,7 @@ import { MatButtonModule } from '@angular/material/button';
       <ng-container *ngIf="esAdmin">
         <a mat-list-item routerLink="/">Inicio</a>
         <a mat-list-item routerLink="/alumnos">Alumnos</a>
-        <a mat-list-item routerLink="/cursos">Cursos</a> <!-- Solo admins -->
+        <a mat-list-item routerLink="/cursos">Cursos</a>
       </ng-container>
 
       <!-- USUARIO -->
@@ -29,7 +26,7 @@ import { MatButtonModule } from '@angular/material/button';
         <a mat-list-item routerLink="/inscripciones">Inscripciones</a>
       </ng-container>
 
-      <button mat-button *ngIf="auth.rolActual" (click)="cerrarSesion()">Cerrar sesión</button>
+      <button mat-button *ngIf="auth.isLoggedIn()" (click)="cerrarSesion()">Cerrar sesión</button>
     </mat-nav-list>
   `,
   styles: [`
@@ -41,9 +38,13 @@ import { MatButtonModule } from '@angular/material/button';
 export class Navbar {
   auth: AuthService = inject(AuthService);
 
-  // Variables para roles
-  esAdmin = this.auth.rolActual === 'admin';
-  esUsuario = this.auth.rolActual === 'usuario';
+  get esAdmin(): boolean {
+    return this.auth.getCurrentRole() === 'admin';
+  }
+
+  get esUsuario(): boolean {
+    return this.auth.getCurrentRole() === 'usuario';
+  }
 
   cerrarSesion() {
     this.auth.logout();

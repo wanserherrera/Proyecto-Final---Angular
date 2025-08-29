@@ -1,8 +1,8 @@
 <h2>Listado de Cursos</h2>
 
-<div *ngIf="auth.rolActual === 'admin'" class="form-curso">
+<div *ngIf="auth.getCurrentRole() === 'admin'" class="form-curso">
   <input matInput placeholder="Nombre del curso" [(ngModel)]="nuevoNombre" />
-  <input matInput placeholder="Descripción (opcional)" [(ngModel)]="nuevaDescripcion" />
+  <input matInput placeholder="Descripción" [(ngModel)]="nuevaDescripcion" />
 
   <button mat-raised-button color="primary" *ngIf="editId === null" (click)="agregarCurso()">
     Agregar
@@ -42,10 +42,10 @@
     <ng-container matColumnDef="acciones">
       <th mat-header-cell *matHeaderCellDef> Acciones </th>
       <td mat-cell *matCellDef="let curso">
-        <button mat-button color="primary" *ngIf="auth.rolActual === 'admin'" (click)="editarCurso(curso)">
+        <button mat-button color="primary" *ngIf="auth.getCurrentRole() === 'admin'" (click)="editarCurso(curso)">
           Editar
         </button>
-        <button mat-button color="warn" *ngIf="auth.rolActual === 'admin'" (click)="eliminarCurso(curso.id)">
+        <button mat-button color="warn" *ngIf="auth.getCurrentRole() === 'admin'" (click)="eliminarCurso(curso.id)">
           Eliminar
         </button>
       </td>

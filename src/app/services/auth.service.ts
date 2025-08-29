@@ -1,39 +1,50 @@
 // src/app/services/auth.service.ts
-// Proyecto realizado por Edilson Herrera.
-// Servicio: AuthService
-// Funcionalidad: Maneja login, logout y roles de usuario (admin | usuario).
-
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { Observable, map } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+interface Usuario {
+  id: string;
+  email: string;
+  password: string;
+  nombre: string;
+  rol: 'admin' | 'usuario';
+}
+
+@Injectable({ providedIn: 'root' })
 export class AuthService {
-  // Guardamos el rol actual en memoria
-  rolActual: 'admin' | 'usuario' | null = null;
+  private apiUrl = 'https://68b22452a860fe41fd606dbe.mockapi.io/usuarios';
 
-  constructor(private router: Router) {}
+  constructor(private http: HttpClient) {}
 
-  login(rol: 'admin' | 'usuario') {
-    this.rolActual = rol;
-    // Podríamos guardar en localStorage si quieres persistencia
-    localStorage.setItem('rol', rol);
+  login(email: string, password: string): Observable<boolean> {
+    return this.http.get<Usuario[]>(this.apiUrl).pipe(
+      map(users => {
+        const user = users.find(u => u.email === email && u.password === password);
+        if (user) {
+          localStorage.setItem('currentUser', JSON.stringify(user));
+          return true;
+        }
+        return false;
+      })
+    );
   }
 
   logout() {
-    this.rolActual = null;
-    localStorage.removeItem('rol');
-    this.router.navigate(['/login']);
+    localStorage.removeItem('currentUser');
   }
 
-  // Método que piden tus guards
+  getCurrentUser(): Usuario | null {
+    const user = localStorage.getItem('currentUser');
+    return user ? JSON.parse(user) : null;
+  }
+
   getCurrentRole(): 'admin' | 'usuario' | null {
-    return this.rolActual || (localStorage.getItem('rol') as 'admin' | 'usuario' | null);
+    const user = this.getCurrentUser();
+    return user ? user.rol : null;
   }
 
-  // Helper para saber si está logueado
   isLoggedIn(): boolean {
-    return this.getCurrentRole() !== null;
+    return !!this.getCurrentUser();
   }
 }
