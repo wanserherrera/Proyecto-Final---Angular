@@ -17,6 +17,7 @@ import { MatButtonModule } from '@angular/material/button';
         <a mat-list-item routerLink="/">Inicio</a>
         <a mat-list-item routerLink="/alumnos">Alumnos</a>
         <a mat-list-item routerLink="/cursos">Cursos</a>
+        <a mat-list-item routerLink="/usuarios">Usuarios</a>
       </ng-container>
 
       <!-- USUARIO -->
