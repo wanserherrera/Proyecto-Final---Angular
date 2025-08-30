@@ -1,42 +1,63 @@
-# Angular - Entrega N°3 - Edilson Herrera
+Gestor de Asistentes - Proyecto Final
 
-## 🎯 Descripción
+Autor: Edilson Wanser Herrera Villa
+Fecha: Agosto 2025
 
-Gestor de Asistentes - Proyecto Angular
+## 🚀 Descripción del Proyecto
 
-Este es un proyecto realizado por **Edilson Herrera Villa** como parte de la **Entrega N.º 3** del curso de Angular.  
-Se trata de una aplicación para gestionar alumnos e inscripciones, con control de acceso por roles (`admin` y `usuario`), utilizando **Angular 17** y **Angular Material**.
+Esta aplicación web fue desarrollada para la gestión de asistentes, alumnos, cursos y usuarios, diferenciando el acceso según roles (admin y usuario).
+Permite a los administradores realizar CRUD sobre alumnos, cursos y usuarios, mientras que los usuarios normales pueden consultar listados e inscribirse en cursos.
 
-## 🚀 Tecnologías usadas
+La aplicación fue desarrollada usando Angular Standalone Components, Angular Material, y Mock APIs para simular la persistencia de datos.
 
-- Angular(standalone)
-- Angular Material
-- TypeScript
-- Formularios reactivos
-- Rutas protegidas por rol
+## 🚀 Tecnologías Utilizadas
 
-## 👥 Funcionalidades por rol
+- Frontend: Angular 17, TypeScript
 
-### Rol **Administrador**
-- Accede a la vista de alumnos
-- Puede agregar, editar y eliminar alumnos
+- UI/Estilos: Angular Material, CSS
 
-### Rol **Usuario**
-- Puede ver listados de alumnos y cursos
-- Puede gestionar inscripciones (asignar y quitar alumnos a cursos)
+- Gestión de Estado: BehaviorSubject (para Alumnos), servicios Angular
 
-# 🧪 Cómo ejecutar el proyecto
+- Routing: Angular Router con Guards (authGuard, roleGuard)
 
-1. Clona el repositorio:
-https://github.com/wanserherrera/Angular-Entrega-N-2.git
+- Backend (simulado): Mock API (https://mockapi.io/) para Usuarios y Cursos
 
-Instala dependencias:
+## 🚀 Funcionalidades
+Para Administradores (admin):
 
-2.Instala dependencias:
+- Gestionar Alumnos: Crear, editar, eliminar y listar.
+
+- Gestionar Cursos: Crear, editar, eliminar y listar.
+
+- Gestionar Usuarios: Crear, editar, eliminar y listar.
+
+- Visualizar el nombre del usuario logueado y título de funcionalidad en la toolbar.
+
+- Navegación segura con authGuard y roleGuard.
+
+Para Usuarios Normales (usuario):
+
+- Consultar listado de alumnos y cursos.
+
+- Realizar inscripciones a cursos.
+
+- Visualizar su nombre en la toolbar.
+
+- Navegación protegida por authGuard.
+
+## 🚀 Instalación y Ejecución
+1.-Clonar el repositorio:
+git clone 
+2.-Instalar dependencias:
 npm install
-
-3.Ejecuta en modo desarrollo:
+3.-Ejecutar la aplicación:
 ng serve
-Luego abre: http://localhost:4200
 
+## 🚀 Credenciales de Prueba
+- Administrador:
+Usuario: admin@ejemplo.com
+Contraseña: 123456
 
+- Usuario Normal:
+Usuario: usuario@ejemplo.com
+Contraseña: 123456
